@@ -1,19 +1,25 @@
-# TODO: properly minify + deploy this but I've only touched bun for like 10 minutes so I'll think about it later
-
-FROM oven/bun:slim AS stage1
+FROM oven/bun:slim AS base
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+
+FROM base AS install
+WORKDIR /app
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod
+RUN cd /temp/prod && bun install --frozen-lockfile --production
+
+FROM base AS prerelease
+WORKDIR /app
+COPY --from=install /temp/prod/node_modules node_modules
 COPY . .
-RUN npm run build && npm prune --production
+ENV NODE_ENV=production
+RUN bun test
+RUN bun run build
 
-FROM oven/bun:slim AS stage2
-USER 1000:1000
+FROM base AS release
 WORKDIR /app
-RUN ls
-COPY --from=stage1 --chown=1000:1000 /app/build ./build
-COPY --from=stage1 --chown=1000:1000 /app/node_modules ./node_modules
-COPY package.json .
-ENV PORT=5050
-EXPOSE 5050
-CMD ["bun", "run", "./src/index.ts"]
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /app/dist/index.js .
+COPY --from=prerelease /app/package.json .
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "index.js" ]

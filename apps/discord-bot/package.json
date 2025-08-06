@@ -4,7 +4,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"build": "bun build --target bun --minify ./src/index.ts --outdir ./build",
+		"build": "bun build --target bun --minify ./src/index.ts --outdir ./dist",
 		"dev": "bun run --watch ./src/index.ts"
 	},
 	"author": "",
@@ -16,6 +16,8 @@
 	},
 	"devDependencies": {
 		"@types/node": "24.2.0",
-		"typescript": "5.9.2"
-	}
+		"typescript": "5.9.2",
+		"@types/bun": "latest"
+	},
+	"private": true
 }
