@@ -1,0 +1,15 @@
+services:
+  discord-bot:
+    build: ./apps/discord-bot
+    env_file:
+      - ./apps/discord-bot/.env
+      - .env
+    ports:
+      - "8081:8081"
+  website:
+    build: ./apps/website
+    env_file:
+      - ./apps/website/.env
+      - .env
+    ports:
+      - "5050:5050"
