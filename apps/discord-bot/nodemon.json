@@ -1,0 +1,9 @@
+{
+	"$schema": "https://json.schemastore.org/nodemon.json",
+	"exec": "tsc && node ./dist/index.js",
+	"ext": "*",
+	"events": {
+		"start": "clear"
+	},
+	"watch": ["src"]
+}
