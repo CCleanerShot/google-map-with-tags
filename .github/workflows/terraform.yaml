@@ -27,6 +27,9 @@ jobs:
       - name: Enter Terraform Directory
         run: cd ./infra
 
+      - name: test
+        run: ls
+
       - name: Terraform Init
         run: terraform init
       - id: plan
