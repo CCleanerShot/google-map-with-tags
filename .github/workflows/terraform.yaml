@@ -24,6 +24,9 @@ jobs:
           cli_config_credentials_token: ${{ env.TF_API_TOKEN }}
           terraform_version: ">= 1.2"
 
+      - name: Enter Terraform Directory
+        run: cd ./infra
+
       - name: Terraform Init
         run: terraform init
       - id: plan
