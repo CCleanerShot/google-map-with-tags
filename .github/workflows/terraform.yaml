@@ -34,9 +34,3 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-
-      - name: Logging Terraform Plan Results
-        run: |
-          echo ${{ steps.plan.outputs.stdout }}
-          echo ${{ steps.plan.outputs.stderr }}
-          echo ${{ steps.plan.outputs.exitcode }}
