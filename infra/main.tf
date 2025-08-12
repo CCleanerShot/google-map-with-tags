@@ -7,7 +7,7 @@ provider "aws" {
 
 data "archive_file" "lambda_hello" {
   output_path = "${path.module}/hello.zip"
-  source_file = "${path.module}/hello.mjs"
+  source_file = "${path.module}/../hello.mjs"
   type        = "zip"
 }
 
@@ -51,7 +51,8 @@ resource "aws_lambda_function" "hello_world" {
   filename      = data.archive_file.lambda_hello.output_path
   function_name = "hello_world"
   role          = aws_iam_role.aws_lambda_role.arn
-
+  handler          = "index.handler"
+  runtime = "nodejs20.x"
   environment {
     variables = {
       ENVIRONMENT = "production"
