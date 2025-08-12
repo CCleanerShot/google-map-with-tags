@@ -1,5 +1,14 @@
+# ### #
+# AWS #
+# ### #
 provider "aws" {
   region = "us-east-1"
+}
+
+data "archive_file" "lambda_hello" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/hello.mjs"
+  output_path = "${path.module}/lambda/hello.zip"
 }
 
 data "aws_ami" "ubuntu" {
@@ -12,6 +21,23 @@ data "aws_ami" "ubuntu" {
   }
 }
 
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    effect  = "Allow"
+
+    principals {
+      identifiers = ["lambda.amazonaws.com"]
+      type        = "Service"
+    }
+  }
+}
+
+resource "aws_iam_role" "aws_lambda_role" {
+  assume_role_policy = data.aws_iam_policy_document.assume_role
+  name               = "aws_lambda_role"
+}
+
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.aws_instance_type
@@ -21,6 +47,22 @@ resource "aws_instance" "app_server" {
   }
 }
 
+resource "aws_lambda_function" "hello_world" {
+  filename      = data.archive_file.lambda_hello.output_path
+  function_name = "hello_world"
+  role          = aws_iam_role.aws_lambda_role.arn
+
+  environment {
+    variables = {
+      ENVIRONMENT = "production"
+      LOG_LEVEL   = "info"
+    }
+  }
+}
+
+# ########## #
+# CLOUDFLARE #
+# ########## #
 provider "cloudflare" {
   api_key = var.cloudflare_api_key
   email   = var.cloudflare_email

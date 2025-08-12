@@ -5,8 +5,9 @@ on:
     branches:
       - main
     paths:
+      - services/lambdas
       - infra
-      - .github/workflows/terraform.yaml
+      - .github/workflows/**/*.yaml
   workflow_dispatch:
 
 jobs:
@@ -32,5 +33,7 @@ jobs:
         run: terraform init
 
       - name: Terraform Plan
-        id: plan
-        run: terraform plan -no-color
+        run: terraform plan
+
+      - name: Terraform Apply
+        run: terraform apply
