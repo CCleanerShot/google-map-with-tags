@@ -20,6 +20,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - run: "ls -la"
+      - run: "cd .. && ls -la"
+      - run: "cd ../.. && ls -la"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
