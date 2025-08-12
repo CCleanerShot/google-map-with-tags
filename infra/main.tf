@@ -7,7 +7,7 @@ provider "aws" {
 
 data "archive_file" "lambda_hello" {
   output_path = "${path.module}/lambdas/hello.zip"
-  source_file = "${path.module}/services/lambdas/hello.mjs"
+  source_file = "${path.module}/services/lambdas/dist/hello.mjs"
   type        = "zip"
 }
 
