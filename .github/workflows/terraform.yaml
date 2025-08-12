@@ -20,17 +20,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - run: "ls -la"
-      - run: "cd .. && ls -la"
-      - run: "cd ../.. && ls -la"
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
 
       - name: Node Build Lambdas
-        run: "npx tsc"
+        run: "npm run build"
+
   terraform:
     defaults:
       run:

@@ -2,8 +2,10 @@
 	"name": "lambdas",
 	"type": "module",
 	"private": true,
-	"devDependencies": {},
-	"peerDependencies": {
+	"devDependencies": {
 		"typescript": "5.9.2"
+	},
+	"scripts": {
+		"build": "tsc"
 	}
 }
