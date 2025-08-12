@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - services/lambdas
+      - services/lambdas/**/*
       - infra/**/*
       - .github/workflows/**/*.yaml
   workflow_dispatch:

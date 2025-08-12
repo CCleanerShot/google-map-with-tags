@@ -6,9 +6,9 @@ provider "aws" {
 }
 
 data "archive_file" "lambda_hello" {
+  output_path = "${path.module}/lambdas/hello.zip"
+  source_file = "${path.module}/services/lambdas/hello.mjs"
   type        = "zip"
-  source_file = "${path.module}/lambda/hello.mjs"
-  output_path = "${path.module}/lambda/hello.zip"
 }
 
 data "aws_ami" "ubuntu" {
