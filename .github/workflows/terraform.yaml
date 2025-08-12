@@ -11,10 +11,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  lambdas:
-    defaults:
-      run:
-        working-directory: ./services/lambdas
+  terraform:
+    env:
+      TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Code
@@ -27,19 +26,7 @@ jobs:
 
       - name: Node Build Lambdas
         run: "npm run build"
-
-  terraform:
-    defaults:
-      run:
-        working-directory: ./infra
-    env:
-      TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
-    name: terraform
-    needs: [lambdas]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+        working-directory: ./services/lambdas
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -49,9 +36,12 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./infra
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ./infra
 
       - name: Terraform Apply
         run: terraform apply
+        working-directory: ./infra
