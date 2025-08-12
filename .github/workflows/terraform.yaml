@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - services/lambdas
-      - infra
+      - infra/**/*
       - .github/workflows/**/*.yaml
   workflow_dispatch:
 
