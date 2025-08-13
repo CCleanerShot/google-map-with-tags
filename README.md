@@ -6,3 +6,17 @@ A collection of 2 apps, a discord bot and a website. The website allows users to
 
 - AWS Cloudwatch
 - GitHub Actions
+
+# Website
+
+Find restaurants near you that meet match price ranges for certain items, as well as match community-approved tags. Filter for foods that best fit your current mood!
+
+- Phase 1: Sign-Up/Login, Tags, Individual Items, Strict Filtering
+- Phase 2: ???
+
+# Discord Bot
+
+Serves as a puesdo admin-dashboard, which will also receive updates about the status of the website, as well as resource-alerts on high loads.
+
+- Phase 1: Basic Admin Dashboard, Resource Alerts
+- Phase 2: ???
